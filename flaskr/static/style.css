@@ -141,6 +141,7 @@ header {
   justify-content: space-between;
   align-items: center;
   width: 100%;
+  text-align: center;
 }
 
 header h1, p, a {
