@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <div>
+    <h1>
+      <a href="{{ url_for('board.detail', link=board['link']) }}">
+        {% block title %}
+          /{{ board['link'] }}/ - {{ board['title'] }}
+        {% endblock %}
+      </a>
+    </h1>
+    <p style="align-self: center;">{{ board['body'] }}</p>
+  </div>
+  <div class='new-thread'>
+    <h3>Create Thread</h3>
+    <form method='post' enctype=multipart/form-data>
+      <input type=file name=file>
+      <label for='title'>Title</label>
+      <input name='title' id='title' value="{{ request.form['title'] }}" maxlength='50' required>
+      <label for='body'>Body</label>
+      <textarea name='body' id='body'>{{ request.form['body'] }}</textarea>
+      <input id='save' type='submit' value='Save'>
+    </form>
+  </div>
+{% endblock %}
+
+{% block content %}
+  {% for thread in threads %}
+    <div class='thread'>
+      <img class='adjust' src="{{ url_for('uploaded_file', filename=thread['img']) }}">
+      <div class='thread-content'>
+        <div class='thread-head' id='{{ thread["id"] }}'>
+          <a href="{{ url_for('board.thread_detail', link=board['link'], id=thread['id']) }}" class='thread-title'>{{ thread['title'] }}</a>
+          <p>#{{ thread['id'] }}</p>
+        </div>
+        <div class="thread-body">
+          <p>{{ thread['body'] }}</p>
+        </div>
+        <div class='thread-footer'>
+          <small>{{ thread['created'].strftime('%d/%m/%Y') }}</small>
+        </div>
+      </div>
+    </div>
+    {% if not loop.last %}
+      <div class="hr"></div>
+    {% endif %}
+  {% endfor %}
+  <a class='action' href="{{ url_for('index') }}">Return</a>
+{% endblock %}
+

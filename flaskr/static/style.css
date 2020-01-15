@@ -1,0 +1,319 @@
+/* BODY and HTML */
+body {
+  background-color: #274156;
+  color: #fbfcff;
+  margin: 0;
+  padding: 0;
+}
+
+h1 {
+  font-size: 24px;
+  padding: 8px;
+}
+
+/* NAV BAR */
+nav ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  overflow: hidden;
+}
+
+nav li {
+ float: left;
+}
+
+li a {
+  display: block;
+  text-decoration: none;
+  padding: 8px 16px;
+  box-sizing: border-box;
+  height: 44px;
+}
+
+li a:hover {
+  background-color: #d0ccd0;
+}
+
+nav {
+  background-color: #1c6e8c;
+  width: 100%;
+  top: 0;
+
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+}
+
+nav a {
+  color: #fbfcff;
+}
+
+/* LOGO */
+.logo {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+}
+
+.logo p {
+  font-size: 12px;
+  padding: 0;
+  margin: 0;
+  color: #fbfcff;
+  align-self: center;
+}
+
+.logo h1 {
+  padding: 0;
+  margin: 0;
+}
+
+/* LINKS  */
+.action {
+  width: auto;
+}
+
+a {
+  color: #fff;
+}
+
+.new {
+  align-self: end;
+  border: none;
+  padding: 8px;
+  text-decoration: none;
+  fill: lightgreen;
+}
+
+a.new:hover {
+  fill: green;
+}
+
+/* INDEX PAGE and TABLE */
+table, th, td {
+  border: 1px solid #d0ccd0;
+  border-collapse: collapse;
+}
+
+th, td {
+  padding: 8px;
+}
+
+th {
+  text-align: left;
+}
+
+table {
+  border-spacing: 8px;
+  width: 100%;
+  align-self: center;
+}
+
+table tr:nth-child(even) {
+  background-color: #1c6e8c;
+}
+
+table tr:nth-child(odd) {
+  background-color: #605856;
+}
+
+/* CONTENT and HEADER */
+.new-content {
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+  width: 90%;
+  margin: auto;
+}
+
+.content {
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: flex-start;
+  width: 85%;
+  margin: auto;
+}
+
+header {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+header h1, p, a {
+  padding: 8px;
+}
+
+header p {
+  text-align: center;
+}
+
+/* UPDATE PAGES */
+.update form {
+  width: 100%;
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+}
+
+.register {
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+}
+
+form #link, #title, #body {
+  width: 32rem;
+}
+
+form #save, #danger {
+  width: 8rem;
+}
+
+.new-thread {
+  text-align: center;
+}
+
+.new-thread form {
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+  padding: 8px;
+}
+
+
+/* THREADS */
+.hr {
+  border-bottom: solid 1px #d0ccd0;
+  width: 100%;
+  padding: 4px;
+  align-self: center;
+  opacity: 25%;
+}
+
+.thread {
+  width: 100%;
+  height: auto;
+  padding: 8px;
+  margin: 0;
+  
+  display: flex;
+  flex-flow: row nowrap;
+
+  text-align: left;
+}
+
+.thread-content {
+  display: flex;
+  flex-flow: column;
+  justify-content: flex-start;
+  width: 100%;
+}
+
+/* THEAD HEAD */
+.thread-head {
+  width: 100%;
+
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+
+  height: auto;
+  margin: 0;
+  padding: 4px;
+}
+
+.thread-head p {
+  padding: 0;
+  margin: 0;
+}
+
+.thread-title {
+  font-weight: bold;
+  font-size: 18px;
+  
+  margin: 0;
+  padding: 2px;
+}
+
+/* THREAD BODY */
+.thread-body {
+  margin: 0;
+  padding: 2px;
+  height: 90%;
+}
+
+.thread-body p {
+  padding: 0;
+  margin: 0;
+}
+
+/* THREAD FOOTER */
+.thread-footer {
+  height: auto;
+  margin: 0;
+  padding: 2px;
+
+  display: flex;
+  flex: row nowrap;
+  justify-content: space-between;
+}
+
+.thread-footer p {
+  margin: 0;
+  padding: 2px;
+}
+
+.options {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: flex-end;
+}
+
+/* IMAGES */
+.adjust {
+  max-height: 240px;
+  width: auto;
+}
+
+.adjust:hover {
+  max-width: 100%;
+  max-height: none;
+  height: auto;
+}
+
+.replies {
+  min-width: 240px;
+  background-color: #1c6e8c;
+
+  padding: 8px;
+  margin: 4px;
+
+  display: flex;
+  flex-flow: row nowrap;
+
+  text-align: left;
+}
+
+/* SVG */
+.options a {
+  padding: 0;
+  margin: 0;
+}
+
+.edit {
+  fill: yellow;
+}
+
+.delete {
+  fill: darkred;
+}
+
+.transparent {
+  background: none;
+  padding: 0;
+  border: none;
+}

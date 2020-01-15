@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}Editing Thread #{{ thread['id'] }}{% endblock %}</h1>
+{% endblock %}
+
+{% block new_content %}
+  <div class='update'>
+    <form method="post">
+      <label for="title">Name</label>
+      <input name="title" id="title"
+        value="{{ request.form['title'] or thread['title'] }}" maxlength='50' required>
+      <label for="body">Description</label>
+      <textarea name="body" id="body">{{ request.form['body'] or thread['body'] }}</textarea>
+      <input id='save' type="submit" value="Save">
+    </form>
+  </div>
+{% endblock %}

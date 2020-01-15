@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}Edit "{{ board['title'] }}"{% endblock %}</h1>
+{% endblock %}
+
+{% block new_content %}
+  <div class='update'>
+    <form method="post">
+      <label for='link'>Link</label>
+      <input name='link' id='link' value="{{ request.form['link'] or board['link'] }}" maxlength='4' required>
+      <label for="title">Name</label>
+      <input name="title" id="title"
+        value="{{ request.form['title'] or board['title'] }}" maxlength='24' required>
+      <label for="body">Description</label>
+      <textarea name="body" id="body">{{ request.form['body'] or board['body'] }}</textarea>
+      <input id='save' type="submit" value="Save">
+    </form>
+    <form action="{{ url_for('board.delete', id=board['id']) }}" method="post">
+      <input id="danger" type="submit" value="Delete" onclick="return confirm('Are you sure you want to delete this board?');">
+    </form>
+  </div>
+
+{% endblock %}

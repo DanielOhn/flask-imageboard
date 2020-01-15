@@ -1,0 +1,105 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <div>
+    <h1>
+      <a href="{{ url_for('board.detail', link=board['link']) }}">
+        {% block title %}
+          /{{ board['link'] }}/ - {{ board['title'] }}
+        {% endblock %}
+      </a>
+    </h1>
+    <p style="align-self: center;">{{ board['body'] }}</p>
+  </div>
+  <div class='new-thread'>
+    <h3>Reply</h3>
+    <form method='post' enctype=multipart/form-data>
+      <input type=file name=file>
+      <label for='title'>Title</label>
+      <input name='title' id='title' value="{{ request.form['title'] }}" maxlength='50'>
+      <label for='body'>Body</label>
+      <textarea name='body' id='body'>{{ request.form['body'] }}</textarea>
+      <input id='save' type='submit' value='Save'>
+    </form>
+  </div>
+{% endblock %}
+
+{% block new_content %}
+  <div class='thread'>
+    <img class='adjust' src="{{ url_for('uploaded_file', filename=thread['img']) }}">
+    <div class='thread-content'>
+      <div class='thread-head' id='{{ thread["id"] }}'>
+        <p class='thread-title'>{{ thread['title'] }}</p>
+        <p>#{{ thread['id'] }}</p>
+      </div>
+      <div class="thread-body">
+        <p>{{ thread['body'] }}</p>
+      </div>
+      <div class='thread-footer'>
+        <small>{{ thread['created'].strftime('%d/%m/%Y') }}</small>
+        {% if g.user['id'] == thread['author_id'] %}
+          <div class='options'>
+          {% if g.user['id'] == thread['author_id'] %}
+            <div class='options'>
+              <a href="{{ url_for('board.update_thread', link=board['link'], id=thread['id']) }}">
+                <svg class='edit' xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24">
+                  <path d="M8.707 19.707L18 10.414 13.586 6l-9.293 9.293c-.128.128-.219.289-.263.464L3 21l5.242-1.03C8.418 19.926 8.579 19.835 8.707 19.707zM21 7.414c.781-.781.781-2.047 0-2.828L19.414 3c-.781-.781-2.047-.781-2.828 0L15 4.586 19.414 9 21 7.414z"/>
+                </svg>
+              </a>
+              <form action="{{ url_for('board.delete_thread', link=board['link'], id=thread['id']) }}" method="post">
+                <button class='transparent' type="submit" onclick="return confirm('Are you sure you want to delete this thread?');">
+                  <svg class='delete' xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24">
+                    <path d="M21,5c0-1.104-0.896-2-2-2H5C3.896,3,3,3.896,3,5v14c0,1.104,0.896,2,2,2h14c1.104,0,2-0.896,2-2V5z M16.207,14.793 l-1.414,1.414L12,13.414l-2.793,2.793l-1.414-1.414L10.586,12L7.793,9.207l1.414-1.414L12,10.586l2.793-2.793l1.414,1.414 L13.414,12L16.207,14.793z"/>
+                  </svg>
+                </button>
+              </form>
+            </div> 
+          {% endif %}
+          </div>
+        {% endif %}
+        
+      </div>
+    </div>
+  </div>
+{% endblock %}
+
+{% block content %}
+  {% for t in threads %}
+    <div class='replies'>
+      {% if t['img'] %}
+        <img class='adjust' src="{{ url_for('uploaded_file', filename=t['img']) }}">
+      {% endif %}
+      <div class='thread-content'>
+        <div class='thread-head' id='{{ t["id"] }}'>
+          <p class='thread-title'>{{ t['title'] }}</p>
+          <p>#{{ t['id'] }}</p>
+        </div>
+        <div class="thread-body">
+          <p>{{ t['body'] }}</p>
+        </div>
+        <div class='thread-footer'>
+          <small>{{ t['created'].strftime('%d/%m/%Y') }}</small>
+          {% if g.user['id'] == t['author_id'] %}
+            <div class='options'>
+              <a href="{{ url_for('board.update_thread', link=board['link'], id=t['id']) }}">
+                <svg class='edit' xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24">
+                  <path d="M8.707 19.707L18 10.414 13.586 6l-9.293 9.293c-.128.128-.219.289-.263.464L3 21l5.242-1.03C8.418 19.926 8.579 19.835 8.707 19.707zM21 7.414c.781-.781.781-2.047 0-2.828L19.414 3c-.781-.781-2.047-.781-2.828 0L15 4.586 19.414 9 21 7.414z"/>
+                </svg>
+              </a>
+              <form action="{{ url_for('board.delete_thread', link=board['link'], id=t['id']) }}" method="post">
+                <button class='transparent' type="submit" onclick="return confirm('Are you sure you want to delete this reply?');">
+                  <svg class='delete' xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24">
+                    <path d="M21,5c0-1.104-0.896-2-2-2H5C3.896,3,3,3.896,3,5v14c0,1.104,0.896,2,2,2h14c1.104,0,2-0.896,2-2V5z M16.207,14.793 l-1.414,1.414L12,13.414l-2.793,2.793l-1.414-1.414L10.586,12L7.793,9.207l1.414-1.414L12,10.586l2.793-2.793l1.414,1.414 L13.414,12L16.207,14.793z"/>
+                  </svg>
+                </button>
+              </form>
+            </div> 
+          {% endif %}        
+        </div>
+      </div>
+    </div>
+  {% endfor %}
+  <a class='action' href="{{ url_for('board.detail', link=board['link']) }}">Return to /{{ board['link'] }}/</a>
+
+
+{% endblock %}
