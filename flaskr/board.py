@@ -1,4 +1,5 @@
-import os
+import os, boto3
+from config import S3_BUCKET, S3_KEY, S3_SECRET
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 
@@ -16,6 +17,8 @@ ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
 
 bp = Blueprint('board', __name__)
 
+
+## BOARDS
 @bp.route('/')
 def index():
   db = get_db()
@@ -27,6 +30,8 @@ def index():
   ).fetchall()
   return render_template('board/index.html', boards=boards)
 
+
+## CREATE BOARD
 @bp.route('/create', methods=('GET', 'POST'))
 @login_required
 def create():
@@ -52,6 +57,8 @@ def create():
       return redirect(url_for('board.index'))
   return render_template('board/create.html')
 
+## GET BOARD
+## Returns a single board
 def get_board(id, check_author=True):
   board = get_db().execute(
     'SELECT b.id, link, title, body, created, author_id, username'
@@ -63,11 +70,12 @@ def get_board(id, check_author=True):
   if board is None:
     abort(404, "Board id {0} doesn't exist.".format(id))
   
-  if check_author and board['author_id'] != g.user['id']:
-    abort(403)
+  # if check_author and board['author_id'] != g.user['id']:
+  #   abort(403)
   
   return board 
 
+## UPDATE BOARD
 @bp.route('/<int:id>/update', methods=('GET', 'POST'))
 @login_required
 def update(id):
@@ -95,6 +103,8 @@ def update(id):
       return redirect(url_for('board.index'))
   return render_template('board/update.html', board=board)
 
+
+## BOARD DELETE
 @bp.route('/<int:id>/delete', methods=('POST', ))
 @login_required
 def delete(id):
@@ -104,7 +114,8 @@ def delete(id):
   db.commit()
   return redirect(url_for('board.index'))
 
-
+## BOARD LINK
+## Returns a board by it's link/url
 def get_board_link(link, check_author=True):
   board = get_db().execute(
     'SELECT b.id, link, title, body, created, author_id, username'
@@ -121,6 +132,8 @@ def get_board_link(link, check_author=True):
   
   return board 
 
+
+## BOARD DETAIL
 @bp.route('/<string:link>', methods=('GET', 'POST'))
 @login_required
 def detail(link):
@@ -139,16 +152,18 @@ def detail(link):
 
     title = request.form['title']
     body = request.form['body']
-    images = request.files['file']
+    img = request.files['file']
     error = None
 
     if not title: 
       error = 'Title is required.'
 
-    if images and allowed_file(images.filename):
-      filename = secure_filename(images.filename)
-      images.save(os.path.join(basedir, current_app.config['UPLOAD_FOLDER'], filename))
-      
+    if img and allowed_file(img.filename):
+      filename = secure_filename(img.filename)
+      s3_resource = boto3.resource('s3')
+      my_bucket = s3_resource.Bucket(S3_BUCKET)
+      my_bucket.Object(filename).put(Body=img)
+
     if error is not None:
       flash(error)
     else:
@@ -260,3 +275,11 @@ def update_thread(link, id):
 def allowed_file(filename):
   return '.' in filename \
     and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+# def upload_file(filename, bucket):
+#   # Uploads to S3 Bucket
+#   obj_name = filename
+#   s3_client = boto3.client('s3')
+#   response = s3_client.upload_file(filename, bucket, obj_name)
+
+#   return response

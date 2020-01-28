@@ -27,7 +27,7 @@
 {% block content %}
   {% for thread in threads %}
     <div class='thread'>
-      <img class='adjust' src="{{ url_for('uploaded_file', filename=thread['img']) }}">
+      <img class='adjust' src="https://lil-baddies.s3-us-west-1.amazonaws.com/{{ thread['img'] }}">
       <div class='thread-content'>
         <div class='thread-head' id='{{ thread["id"] }}'>
           <a href="{{ url_for('board.thread_detail', link=board['link'], id=thread['id']) }}" class='thread-title'>{{ thread['title'] }}</a>
