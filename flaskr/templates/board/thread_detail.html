@@ -26,7 +26,7 @@
 
 {% block new_content %}
   <div class='thread'>
-    <img class='adjust' src="{{ url_for('uploaded_file', filename=thread['img']) }}">
+    <img class='adjust' src="https://lil-baddies.s3-us-west-1.amazonaws.com/{{ thread['img'] }}">
     <div class='thread-content'>
       <div class='thread-head' id='{{ thread["id"] }}'>
         <p class='thread-title'>{{ thread['title'] }}</p>
@@ -67,7 +67,7 @@
   {% for t in threads %}
     <div class='replies'>
       {% if t['img'] %}
-        <img class='adjust' src="{{ url_for('uploaded_file', filename=t['img']) }}">
+        <img class='adjust' src="https://lil-baddies.s3-us-west-1.amazonaws.com/{{ t['img'] }}">
       {% endif %}
       <div class='thread-content'>
         <div class='thread-head' id='{{ t["id"] }}'>

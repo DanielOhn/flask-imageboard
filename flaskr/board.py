@@ -160,9 +160,7 @@ def detail(link):
 
     if img and allowed_file(img.filename):
       filename = secure_filename(img.filename)
-      s3_resource = boto3.resource('s3')
-      my_bucket = s3_resource.Bucket(S3_BUCKET)
-      my_bucket.Object(filename).put(Body=img)
+      upload(img, filename)
 
     if error is not None:
       flash(error)
@@ -208,7 +206,7 @@ def thread_detail(link, id):
 
     if images and allowed_file(images.filename):
       filename = secure_filename(images.filename)
-      images.save(os.path.join(basedir, current_app.config['UPLOAD_FOLDER'], filename))
+      upload(images, filename)
     else:
       filename = None
 
@@ -276,10 +274,7 @@ def allowed_file(filename):
   return '.' in filename \
     and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
-# def upload_file(filename, bucket):
-#   # Uploads to S3 Bucket
-#   obj_name = filename
-#   s3_client = boto3.client('s3')
-#   response = s3_client.upload_file(filename, bucket, obj_name)
-
-#   return response
+def upload(img, filename):
+  s3_resource = boto3.resource('s3')
+  my_bucket = s3_resource.Bucket(S3_BUCKET)
+  my_bucket.Object(filename).put(Body=img)
