@@ -1,11 +1,8 @@
 import os, boto3
 
-from flask import Flask, send_from_directory
+from flask import Flask
+from config import S3_KEY, S3_SECRET
 
-from config import S3_BUCKET, S3_KEY, S3_SECRET
-
-
-# UPLOAD_FOLDER = os.path.join('static', 'uploads')
 
 def create_app(test_config=None):
   s3 = boto3.client(

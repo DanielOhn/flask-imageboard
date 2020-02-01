@@ -1,8 +1,6 @@
 import os, boto3
 from config import S3_BUCKET, S3_KEY, S3_SECRET
 
-basedir = os.path.abspath(os.path.dirname(__file__))
-
 from flask import (
   Blueprint, flash, g, redirect, render_template, request, url_for, current_app
 )
