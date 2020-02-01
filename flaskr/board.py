@@ -116,26 +116,21 @@ def delete(id):
 
 ## BOARD LINK
 ## Returns a board by it's link/url
-def get_board_link(link, check_author=True):
+def get_board_link(link):
   board = get_db().execute(
-    'SELECT b.id, link, title, body, created, author_id, username'
-    ' FROM board b JOIN user u ON b.author_id = u.id'
-    ' WHERE b.link = ?',
+    'SELECT b.id, link, title, body, created, author_id'
+    ' FROM board b WHERE b.link = ?',
     (link,)
   ).fetchone()
 
   if board is None:
     abort(404, "Board id {0} doesn't exist.".format(link))
-  
-  if check_author and board['author_id'] != g.user['id']:
-    abort(403)
-  
+
   return board 
 
 
 ## BOARD DETAIL
 @bp.route('/<string:link>', methods=('GET', 'POST'))
-@login_required
 def detail(link):
   board = get_board_link(link)
 

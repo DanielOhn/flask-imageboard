@@ -11,17 +11,19 @@
     </h1>
     <p style="align-self: center;">{{ board['body'] }}</p>
   </div>
-  <div class='new-thread'>
-    <h3>Reply</h3>
-    <form method='post' enctype=multipart/form-data>
-      <input type=file name=file>
-      <label for='title'>Title</label>
-      <input name='title' id='title' value="{{ request.form['title'] }}" maxlength='50'>
-      <label for='body'>Body</label>
-      <textarea name='body' id='body'>{{ request.form['body'] }}</textarea>
-      <input id='save' type='submit' value='Save'>
-    </form>
-  </div>
+  {% if g.user %}
+    <div class='new-thread'>
+      <h3>Reply</h3>
+      <form method='post' enctype=multipart/form-data>
+        <input type=file name=file>
+        <label for='title'>Title</label>
+        <input name='title' id='title' value="{{ request.form['title'] }}" maxlength='50'>
+        <label for='body'>Body</label>
+        <textarea name='body' id='body'>{{ request.form['body'] }}</textarea>
+        <input id='save' type='submit' value='Save'>
+      </form>
+    </div>
+  {% endif %}
 {% endblock %}
 
 {% block new_content %}
